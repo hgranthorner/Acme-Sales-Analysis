@@ -4,7 +4,7 @@ function productsPurchased(arrOfOrders, arrOfProducts) {
   let arrOfOrderedProducts = []
   arrOfOrders.forEach(order => {
     let found = arrOfProducts.find(product => order.productId === product.id)
-    if (found !== undefined && !arrOfOrderedProducts.includes(found.name)) arrOfOrderedProducts.push(found.name)
+    if (found !== undefined && !arrOfOrderedProducts.includes(found)) arrOfOrderedProducts.push(found)
   })
   return arrOfOrderedProducts
 }
@@ -31,9 +31,19 @@ function topSellingProductByQuantity(arrOfOrders, arrOfProducts) {
   return returnObj
 }
 
+function usersWithOrders(arrOfUsers, arrOfOrders) {
+  let arrOfUsersWithOrders = []
+  arrOfUsers.forEach(user => {
+    let found = arrOfOrders.find(order => order.userId === user.id)
+    if (found) arrOfUsersWithOrders.push(user)
+  })
+  return arrOfUsersWithOrders
+}
+
 module.exports = {
   productsPurchased: productsPurchased,
-  topSellingProductByQuantity: topSellingProductByQuantity
+  topSellingProductByQuantity: topSellingProductByQuantity,
+  usersWithOrders: usersWithOrders
 }
 
 const products = [

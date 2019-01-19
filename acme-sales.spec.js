@@ -3,8 +3,9 @@ const expect = require('chai').expect
 let sourceFile = './acme-sales'
 const productsPurchased = require(sourceFile).productsPurchased
 const topSellingProductByQuantity = require(sourceFile).topSellingProductByQuantity
+const usersWithOrders = require(sourceFile).usersWithOrders
 
-describe('productsPurchased', () => {
+describe('function productsPurchased', () => {
   it('exists', () => {
     expect(productsPurchased).to.be.ok
   })
@@ -22,7 +23,7 @@ describe('productsPurchased', () => {
       }
     ]
 
-    expect(productsPurchased(orders, products)).to.eql(['juice'])
+    expect(productsPurchased(orders, products)).to.eql([{ id: 2, name: 'juice' }])
   })
 })
 
@@ -40,5 +41,22 @@ describe('function topSellingProductByQuantity', () => {
 
   it('should return the order with the most highest quantity', () => {
     expect(topSellingProductByQuantity(orders, products)).to.eql({ id: 2, name: 'juice', price: 500 })
+  })
+})
+
+describe('function usersWithOrders', () => {
+  let users = [{ id: 1, name: 'spartacus' }, { id: 2, name: 'xerxes' }]
+  let orders = [{ id: 1, userId: 2 }]
+
+  it('exists', () => {
+    expect(usersWithOrders).to.be.ok
+  })
+
+  it('should return a single Object', () => {
+    expect(usersWithOrders(users, orders).toString()).to.eql('[object Object]')
+  })
+
+  it('should return an array of users that have placed orders', () => {
+    expect(usersWithOrders(users, orders)).to.eql([{ id: 2, name: 'xerxes' }])
   })
 })
